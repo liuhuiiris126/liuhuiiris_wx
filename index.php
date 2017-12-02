@@ -50,10 +50,9 @@ class wechat
             <Content><![CDATA[%s]]></Content>
             <FuncFlag>0</FuncFlag>
             </xml>";
-      if($keyword == "?" || $keyword == "？") //获取用户信息
-      {
+      if($keyword) { //获取用户信息
         $msgType = "text";
-        $contentStr = date("Y-m-d H:i:s",time()); // 回复的内容
+        $contentStr = "hi~"; // 回复的内容
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         echo $resultStr;
       }

@@ -4,17 +4,22 @@
  */
 //define your token
 define("TOKEN", "weixin");
-$wechatObj = new wechatCallbackapiTest();
-$wechatObj->valid();
-class wechatCallbackapiTest
+$wechatObj = new wechat();
+if (isset($_GET["echostr"])) {
+  $wechatObj->valid();
+} else {
+  $wechatObj->responseMsg();
+}
+class wechat
 {
  public function valid()
   {
     $echoStr = $_GET["echostr"];
     //valid signature , option
     if($this->checkSignature()){
-     $this->responseMsg();
-     exit;
+      header('content-type:text');
+      echo $echoStr;
+      exit;
     }
   }
 
@@ -22,7 +27,7 @@ class wechatCallbackapiTest
   {
     //get post data, May be due to the different environments
     $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        //extract post data
+    //extract post data
     if (!emptyempty($postStr)){
       $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
       $fromUsername = $postObj->FromUserName;
